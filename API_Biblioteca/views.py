@@ -1,15 +1,15 @@
 from rest_framework import viewsets, permissions
-from API_Biblioteca.models import *
-from API_Biblioteca.serializers import *
+from API_Biblioteca.models import Livro, Leitor, Emprestimo
+from API_Biblioteca.serializers import LivroSerializer, LeitorSerializer, EmprestimoSerializer
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
 # Create your views here.
-class Livro_API(viewsets.ModelViewSet):
+class LivroAPI(viewsets.ModelViewSet):
     '''API para gerenciamento de livros'''
     queryset = Livro.objects.all()
-    serializer_class = Livro_Serializer
+    serializer_class = LivroSerializer
     authentication_classes = [TokenAuthentication]
     permission_classes = [permissions.DjangoModelPermissions]
 
@@ -23,10 +23,10 @@ class Livro_API(viewsets.ModelViewSet):
         return query_set
 
 
-class Leitor_API(viewsets.ModelViewSet):
+class LeitorAPI(viewsets.ModelViewSet):
     '''API para gerenciamento de leitores'''
     queryset = Leitor.objects.all()
-    serializer_class = Leitor_Serializer
+    serializer_class = LeitorSerializer
     authentication_classes = [TokenAuthentication]
     permission_classes = [permissions.DjangoModelPermissions]
 
@@ -35,14 +35,14 @@ class Leitor_API(viewsets.ModelViewSet):
     def emprestimos(self, request, pk=None):
         leitor = self.get_object()
         emprestimos = Emprestimo.objects.filter(leitor=leitor)
-        serializer = Emprestimo_Serializer(emprestimos, many=True)
+        serializer = EmprestimoSerializer(emprestimos, many=True)
         return Response(serializer.data)
 
 
-class Emprestimo_API(viewsets.ModelViewSet):
+class EmprestimoAPI(viewsets.ModelViewSet):
     '''API para gerenciamento de emprestimos'''
     queryset = Emprestimo.objects.all()
-    serializer_class = Emprestimo_Serializer
+    serializer_class = EmprestimoSerializer
     authentication_classes = [TokenAuthentication]
     permission_classes = [permissions.DjangoModelPermissions]
 
