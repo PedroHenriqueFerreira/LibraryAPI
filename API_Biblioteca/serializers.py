@@ -1,22 +1,22 @@
 from rest_framework import serializers
-from API_Biblioteca.models import *
+from API_Biblioteca.models import Leitor, Livro, Emprestimo
 
 # FUNCIONALIDADE NOVA - BLOQUEAR LEITOR DE PEDIR EMPRESTIMO SE TEM ATRASOS
 from datetime import datetime, timedelta
 
 # FUNCIONALIDADE NOVA - INCLUIR ISBN E ESTADO DO LIVRO
-class Livro_Serializer(serializers.ModelSerializer):
+class LivroSerializer(serializers.ModelSerializer):
     class Meta:
         model = Livro
         fields = ['id', 'isbn', 'titulo', 'autor', 'categoria', 'data_pub', 'estado']
         
-class Leitor_Serializer(serializers.ModelSerializer):
+class LeitorSerializer(serializers.ModelSerializer):
     class Meta:
         model = Leitor
         fields = ['id', 'nome', 'idade', 'cidade'] 
 
 
-class Emprestimo_Serializer(serializers.ModelSerializer):
+class EmprestimoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Emprestimo
         fields = ['id', 'leitor', 'livro', 'data_emprestimo', 'data_devolucao']
